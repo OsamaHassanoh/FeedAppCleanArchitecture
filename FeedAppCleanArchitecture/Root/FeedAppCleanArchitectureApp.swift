@@ -9,7 +9,7 @@ import SwiftUI
 import Kingfisher
 
 @main
-struct FeedApplicationApp: App {
+struct FeedAppCleanArchitectureApp: App {
     @Environment(\.scenePhase) private var scenePhase // Observe scene phase changes
     @StateObject private var themeManager = ThemeManager()
     
