@@ -6,3 +6,20 @@
 //
 
 import Foundation
+@testable import FeedAppCleanArchitecture
+
+final class MockFetchFeedsUseCase: FetchFeedsUseCaseProtocol {
+    var shouldReturnError = false
+    var mockFeeds: [FeedSectionEntity] = []
+    var fetchFeedsCallCount = 0
+    
+    func fetchFeeds() async throws -> [FeedSectionEntity] {
+        fetchFeedsCallCount += 1
+        
+        if shouldReturnError {
+            throw NSError(domain: "TestError", code: -1)
+        }
+        
+        return mockFeeds
+    }
+}
