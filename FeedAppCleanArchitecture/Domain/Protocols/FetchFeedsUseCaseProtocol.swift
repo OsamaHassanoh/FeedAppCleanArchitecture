@@ -6,3 +6,7 @@
 //
 
 import Foundation
+
+protocol FetchFeedsUseCaseProtocol {
+    func fetchFeeds() async throws -> [FeedSectionEntity]
+}
