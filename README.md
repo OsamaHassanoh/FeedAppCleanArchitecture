@@ -55,53 +55,140 @@ Network: API communication and error handling
 ## 🗂️ Project Structure
 ```
 FeedAppCleanArchitecture/
-├── Root/
-│   └── FeedAppCleanArchitectureApp.swift
-├── Core/
+│
+├── Core/                                    # Shared infrastructure
 │   ├── DI/
-│   │   └── DIContainer.swift              # Dependency injection
+│   │   ├── AppDIContainer.swift            # Root container
+│   │   └── DIContainer.swift               # Base protocol
+│   │
 │   ├── Network/
-│   │   ├── Authorization/
-│   │   ├── Endpoint/
-│   │   └── Service/
-│   └── Theme/
-│       └── ThemeManager.swift
-├── Data/
-│   ├── DTOs/
-│   │   ├── FeedResponseDTO.swift
-│   │   ├── PostDTO.swift
-│   │   └── UserDTO.swift
-│   ├── Mappers/
-│   │   └── FeedMapper.swift
-│   ├── Repositories/
-│   │   └── FeedRepository.swift
-│   └── Endpoints/
-│       └── FetchFeedEndPoint.swift
-├── Domain/
-│   ├── Entities/
-│   │   ├── FeedSectionEntity.swift
-│   │   ├── PostEntity.swift
-│   │   └── UserEntity.swift
-│   ├── Protocols/
-│   │   ├── FeedRepoProtocol.swift
-│   │   └── FetchFeedsUseCaseProtocol.swift
-│   └── UseCases/
-│       └── FetchFeedsUseCase.swift
-└── Presentation/
-    ├── Scenes/
-    │   └── Feed/
-    │       ├── Views/
-    │       │   ├── FeedView.swift
-    │       │   └── PostDetailView.swift
-    │       ├── UIComponents/
-    │       │   ├── FeedPostCardView.swift
-    │       │   └── FeedSectionSelectorView.swift
-    │       └── ViewModel/
-    │           └── FeedViewModel.swift
-    └── Common/
-        ├── LoadingView.swift
-        └── ErrorView.swift
-```
+│   │   ├── NetworkService.swift
+│   │   ├── NetworkError.swift
+│   │   └── APIEndpoints.swift
+│   │
+│   ├── Theme/
+│   │   ├── AppTheme.swift
+│   │   ├── Colors.swift
+│   │   └── Typography.swift
+│   │
+│   └── Helpers/
+│       ├── Extensions/
+│       │   ├── String+Extensions.swift
+│       │   └── Date+Extensions.swift
+│       └── Utilities/
+│           ├── Logger.swift
+│           └── Validator.swift
+│
+└── Features/                                # All features
+    │
+    ├── Feed/                                # Feed Feature
+    │   ├── Data/
+    │   │   ├── DTO/
+    │   │   │   ├── FeedResponseDTO.swift
+    │   │   │   ├── PostDTO.swift
+    │   │   │   └── UserDTO.swift
+    │   │   │
+    │   │   ├── Endpoints/
+    │   │   │   └── FeedEndpoint.swift
+    │   │   │
+    │   │   ├── Mappers/
+    │   │   │   └── FeedMapper.swift
+    │   │   │
+    │   │   └── Repository/
+    │   │       └── FeedRepository.swift
+    │   │
+    │   ├── Domain/
+    │   │   ├── Entities/
+    │   │   │   ├── FeedSectionEntity.swift
+    │   │   │   ├── PostEntity.swift
+    │   │   │   └── UserEntity.swift
+    │   │   │
+    │   │   ├── Protocols/
+    │   │   │   └── FeedRepoProtocol.swift
+    │   │   │
+    │   │   └── UseCase/
+    │   │       ├── FetchFeedsUseCase.swift
+    │   │       └── LikePostUseCase.swift
+    │   │
+    │   ├── Presentation/
+    │   │   ├── FeedView.swift
+    │   │   ├── FeedViewModel.swift
+    │   │   └── Components/
+    │   │       ├── PostCard.swift
+    │   │       └── SectionSelector.swift
+    │   │
+    │   └── DI/
+    │       └── FeedDIContainer.swift        # Feature DI
+    │
+    ├── Account/                             # Account Feature
+    │   ├── Data/
+    │   │   ├── DTO/
+    │   │   │   ├── LoginDTO.swift
+    │   │   │   └── UserDTO.swift
+    │   │   │
+    │   │   ├── Endpoints/
+    │   │   │   └── AuthEndpoint.swift
+    │   │   │
+    │   │   └── Repository/
+    │   │       └── AuthRepository.swift
+    │   │
+    │   ├── Domain/
+    │   │   ├── Entities/
+    │   │   │   └── User.swift
+    │   │   │
+    │   │   ├── Protocols/
+    │   │   │   └── AuthRepoProtocol.swift
+    │   │   │
+    │   │   └── UseCase/
+    │   │       ├── LoginUseCase.swift
+    │   │       ├── RegisterUseCase.swift
+    │   │       └── LogoutUseCase.swift
+    │   │
+    │   ├── Presentation/
+    │   │   ├── LoginView.swift
+    │   │   ├── LoginViewModel.swift
+    │   │   ├── RegisterView.swift
+    │   │   └── RegisterViewModel.swift
+    │   │
+    │   └── DI/
+    │       └── AccountDIContainer.swift
+    │
+    ├── Profile/                             # Profile Feature
+    │   ├── Data/
+    │   │   ├── DTO/
+    │   │   ├── Endpoints/
+    │   │   └── Repository/
+    │   │
+    │   ├── Domain/
+    │   │   ├── Entities/
+    │   │   ├── Protocols/
+    │   │   └── UseCase/
+    │   │
+    │   ├── Presentation/
+    │   │   ├── ProfileView.swift
+    │   │   ├── ProfileViewModel.swift
+    │   │   └── Components/
+    │   │
+    │   └── DI/
+    │       └── ProfileDIContainer.swift
+    │
+    └── Settings/                            # Settings Feature
+        ├── Data/
+        │   ├── DTO/
+        │   ├── Endpoints/
+        │   └── Repository/
+        │
+        ├── Domain/
+        │   ├── Entities/
+        │   ├── Protocols/
+        │   └── UseCase/
+        │
+        ├── Presentation/
+        │   ├── SettingsView.swift
+        │   └── SettingsViewModel.swift
+        │
+        └── DI/
+            └── SettingsDIContainer.swift
 
 ---
 
