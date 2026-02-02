@@ -8,6 +8,7 @@ import SwiftUI
 import Combine
 
 struct FeedView: View {
+    @EnvironmentObject var reachability: NetworkReachabilityManager
     @StateObject private var viewModel: FeedViewModel
     @State private var selectedSectionID: String = ""
     
