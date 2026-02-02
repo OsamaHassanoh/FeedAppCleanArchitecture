@@ -13,7 +13,7 @@ struct FeedView: View {
     @State private var selectedSectionID: String = ""
     
     // ✅ Dependency Injection
-    init(viewModel: FeedViewModel = DIContainer.shared.makeFeedViewModel()) {
+    init(viewModel: FeedViewModel = AppDIContainer.shared.feedContainer.makeFeedViewModel()) {
         _viewModel = StateObject(wrappedValue: viewModel)
     }
     
